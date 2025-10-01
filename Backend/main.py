@@ -2,20 +2,20 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
+import os
 from dotenv import load_dotenv
 
 load_dotenv()
-import os
 
-api_key = os.environ.get("GROQ_API_KEY")
 
-if not api_key:
-    raise ValueError("GROQ_API_KEY not set in environment variables")
 
-# Pass it to the client
-client = Groq(api_key=api_key)
+client = Groq(
+        api_key=os.environ.get("GROQ_API_KEY"),
+    )
+
 class chatRequest(BaseModel):
     message : str
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
@@ -25,7 +25,6 @@ app.add_middleware(
     allow_credentials=True
 )
 
-#@app.get("/chat")
 def get_bot_response(user_message):
     message=user_message.lower()
 
@@ -43,10 +42,8 @@ def get_bot_response(user_message):
     return chat_completion.choices[0].message.content
 
 
-
-
 @app.post("/chat")
 async def chat(request:chatRequest):
-    reply = get_bot_response(request.message)
+    reply=get_bot_response(request.message)
     return {"reply":reply}
-
+    
