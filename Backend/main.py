@@ -10,7 +10,13 @@ client = Groq(
         api_key=os.environ.get("GROQ_API_KEY")
     )
 
+api_key = os.environ.get("GROQ_API_KEY")
 
+if not api_key:
+    raise ValueError("GROQ_API_KEY not set in environment variables")
+
+# Pass it to the client
+client = Groq(api_key=api_key)
 class chatRequest(BaseModel):
     message : str
 app = FastAPI()
