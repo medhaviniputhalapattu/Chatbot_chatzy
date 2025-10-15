@@ -1,3 +1,11 @@
+Flow Explanation:
+User Input: Whatever the user types.
+Lowercase Conversion: Makes the message uniform for processing.
+Send to API: The message is sent to the LLaMA-3 model.
+Get Completion Object: The API returns a response object containing choices.
+Extract Content: Take the first choice’s message content.
+Return: The text is returned as the bot’s reply.
+
 # Chatzy Docker Images 
 
 This README provides all the commands to check that the Chatzy frontend and backend Docker images are working correctly from Docker Hub.
